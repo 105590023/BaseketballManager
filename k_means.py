@@ -1,7 +1,3 @@
-# %matplotlib inline
-# import matplotlib.pyplot as plt
-# from matplotlib import pyplot as plt
-
 #%%
 import numpy as np 
 import matplotlib.pyplot as plt  
@@ -62,5 +58,56 @@ train[["Sex", "Survived"]].groupby(['Sex'], as_index=False).mean().sort_values(b
 train[["SibSp", "Survived"]].groupby(['SibSp'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
 #%%
+# 年齡與倖存者”的關係圖
 g = sns.FacetGrid(train, col='Survived')
 g.map(plt.hist, 'Age', bins=20)
+
+#%%
+# Pclass和Survived功能如何與圖表相互關聯
+grid = sns.FacetGrid(train, col='Survived', row='Pclass', size=2.2, aspect=1.6)
+grid.map(plt.hist, 'Age', alpha=.5, bins=20)
+grid.add_legend();
+
+#%%
+# 數據類型
+train.info()
+
+#%%
+# 刪除功能
+train = train.drop(['Name','Ticket', 'Cabin','Embarked'], axis=1)
+test = test.drop(['Name','Ticket', 'Cabin','Embarked'], axis=1)
+
+#%%
+# 將“性別”特徵轉換為數字特徵
+labelEncoder = LabelEncoder()
+labelEncoder.fit(train['Sex'])
+labelEncoder.fit(test['Sex'])
+train['Sex'] = labelEncoder.transform(train['Sex'])
+test['Sex'] = labelEncoder.transform(test['Sex'])
+
+#%%
+# 訓練K-Means模型
+# drop()功能從數據中刪除Survival列
+X = np.array(train.drop(['Survived'], 1).astype(float))
+y = np.array(train['Survived'])
+
+# 構建K-Means模型
+kmeans = KMeans(n_clusters=2) # You want cluster the passenger records into 2: Survived or Not survived
+
+# 把0 - 1作為所有特徵的統一值範圍
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X)
+
+kmeans.fit(X_scaled)
+
+#%%
+# 模型的準確性
+correct = 0
+for i in range(len(X)):
+    predict_me = np.array(X[i].astype(float))
+    predict_me = predict_me.reshape(-1, len(predict_me))
+    prediction = kmeans.predict(predict_me)
+    if prediction[0] == y[i]:
+        correct += 1
+
+print(correct/len(X))
