@@ -1,10 +1,11 @@
 import json
+import csv
 
 with open('data.json', 'r') as rf:
     data = json.load(rf)
 
 # print(type(data[1]["2P%"]))
-# print(type(data))
+print(type(data))
 for i in range(len(data)):
     for j in range(i+1, len(data)):
         if(data[i].get("Rk") == data[j].get("Rk") and data[i].get("Rk") != 0):
@@ -63,6 +64,18 @@ for player in list(data):
     if(player.get("Rk") == 0):
         data.remove(player)
 
-new_data = open("new_data.json", 'w')
+print(type(data[0]))
+fieldnames = ['Rk', 'Player', 'Pos', 'Age', 'Tm',	'G',	'GS',	'MP',	'FG',	'FGA',	'FG%',	'3P',	'3PA',	'3P%',	'2P',	'2PA',	'2P%',	'eFG%',	'FT',	'FTA',	'FT%',	'ORB',	'DRB',	'TRB',	'AST',	'STL',	'BLK',	'TOV',	'PF',	'PTS']
+with open('csv_data.csv', 'w', newline='') as csvfile:
+    writer = csv.DictWriter(csvfile,fieldnames = fieldnames)
+    writer.writeheader()
+    for player in data:
+        # print(type(player))
+        writer.writerow(player)
 
-new_data.write(json.dumps(data))
+
+# new_data = open("new_data.json", 'w')
+# convert_csv = new_data.to_csv()
+# csv_data = open("csv_data.csv", 'w')
+# new_data.write(json.dumps(data))
+# csv_data.write()
