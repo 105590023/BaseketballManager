@@ -11,7 +11,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
 
 # 讀取測試資料
+# playerData = pd.read_csv("./player.csv")
 playerData = pd.read_csv("./csv_data.csv")
+
 
 # 列出輸入資料
 # print("------- playerData -------")
@@ -27,7 +29,7 @@ playerData = pd.read_csv("./csv_data.csv")
 
 #%%
 # 訓練K-Means模型
-data = playerData[['PTS', 'TRB', 'AST', 'STL', 'BLK']]
+data = playerData[['FG%', '3P%', 'AST', 'TRB', 'FT%']]
 pca = PCA(n_components=2)
 reduced_X = pca.fit_transform(data)
 
