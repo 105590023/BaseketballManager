@@ -1,11 +1,14 @@
 import json
 import csv
 
+# 載入原始檔案
 with open('data.json', 'r') as rf:
     data = json.load(rf)
 
 # print(type(data[1]["2P%"]))
-print(type(data))
+# print(type(data))
+
+# 如果同一球員在多個球隊，則將它們資料合成一個
 for i in range(len(data)):
     for j in range(i+1, len(data)):
         if(data[i].get("Rk") == data[j].get("Rk") and data[i].get("Rk") != 0):
@@ -60,12 +63,16 @@ for i in range(len(data)):
             data[i]["G"] = float(data[i].get("G")) + float(data[j].get("G"))
             data[j]["Rk"] = 0
 
+# 刪除重複的球員
 for player in list(data):
     if(player.get("Rk") == 0):
         data.remove(player)
 
-print(type(data[0]))
+# print(type(data[0]))
+# csv欄位名稱
 fieldnames = ['Rk', 'Player', 'Pos', 'Age', 'Tm',	'G',	'GS',	'MP',	'FG',	'FGA',	'FG%',	'3P',	'3PA',	'3P%',	'2P',	'2PA',	'2P%',	'eFG%',	'FT',	'FTA',	'FT%',	'ORB',	'DRB',	'TRB',	'AST',	'STL',	'BLK',	'TOV',	'PF',	'PTS']
+
+# 開啟寫入檔
 with open('csv_data.csv', 'w', newline='') as csvfile:
     writer = csv.DictWriter(csvfile,fieldnames = fieldnames)
     writer.writeheader()
