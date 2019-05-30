@@ -1,4 +1,5 @@
 #%%
+import csv
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -17,6 +18,17 @@ _player[1] = input("籃板：")
 _player[2] = input("助攻：")
 _player[3] = input("抄截：")
 _player[4] = input("火鍋：")
+
+headers = ['Rk', 'Player', 'Pos', 'Age', 'Tm', 'G', 'GS', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', '2P', '2PA', '2P%', 'eFG%', 'FT', 'FTA', 'FT%', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+
+with open('write.csv', 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(headers)
+    data = [('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '14.5', '1.9', '1.5', '2.1', '0', '0', '20.6')]
+
+    writer.writerows(data)
+
+
 
 # 讀取測試資料
 playerData = pd.read_csv("./csv_data.csv")
@@ -86,7 +98,7 @@ sum = 0
 for i in range(5):
     for j in range(5):
         sum += int(array[i][j])
-plt.scatter(X_scaled[529][0],X_scaled[529][1])
+plt.scatter(X_scaled[525][0], X_scaled[525][1], s=200, c='m', marker='*')
 print(sum)
 plt.axis([-0.05, 1.05, -0.05, 1.05]) 
 plt.show()
