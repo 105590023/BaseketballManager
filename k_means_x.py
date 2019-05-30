@@ -19,14 +19,14 @@ _player[2] = input("助攻：")
 _player[3] = input("抄截：")
 _player[4] = input("火鍋：")
 
-# headers = ['Rk', 'Player', 'Pos', 'Age', 'Tm', 'G', 'GS', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', '2P', '2PA', '2P%', 'eFG%', 'FT', 'FTA', 'FT%', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+headers = ['Rk', 'Player', 'Pos', 'Age', 'Tm', 'G', 'GS', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', '2P', '2PA', '2P%', 'eFG%', 'FT', 'FTA', 'FT%', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
 
-# with open('write.csv', 'w') as f:
-#     writer = csv.writer(f)
-#     writer.writerow(headers)
-#     data = [('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '14.5', '1.9', '1.5', '2.1', '0', '0', '20.6')]
-
-#     writer.writerows(data)
+# 將輸入資料加在csv_data後面
+with open('csv_data.csv', 'a', newline = '') as f:
+    writer = csv.writer(f)
+    # writer.writerow(headers)
+    data = [('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', _player[1],  _player[2],  _player[3],  _player[4], '0', '0', _player[0])]
+    writer.writerows(data)
 
 
 
